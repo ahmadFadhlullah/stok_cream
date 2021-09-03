@@ -1,0 +1,12 @@
+<?php
+
+use Illuminate\Support\Facades\Route;
+
+Auth::routes();
+
+Route::get('/home', 'Users@index')->name('home');
+Route::get('/', 'Users@index')->name('index');
+Route::get('/home/tabelcream','Users@tabel_cream')->name('tabel_cream');
+// aksi cream
+Route::post('/home/tablecream','Users@hapus_cream')->name('hapus_cream');
+// Route::get('/home', 'HomeController@index')->name('home');
