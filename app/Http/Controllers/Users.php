@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use App\User;
 use App\StokCream;
 
 class Users extends Controller
@@ -32,4 +33,31 @@ class Users extends Controller
         $find->delete();
         return 'berhasil';
     }
+
+    // profile
+    public function profile()
+    {
+        $profil = User::find(Auth::user()->id);
+        $profilFoto = $profil->url_image;
+        return view('user.profile', compact('profilFoto'));
+    }
+    public function ubahFoto(Request $request)
+    {
+        $find = User::find(Auth::user()->id);
+        $foto = $request->url_image;
+        $fotoName = time().'.'.$foto->getClientOriginalExtension();
+        $foto->move('profil/', $fotoName);
+        $find->url_image = $fotoName;
+        $find->update();
+        return redirect()->back()->with('pesan', 'berhasil update foto profile');
+        // dd($request);
+    }
+    public function ubahProfil(Request $request)
+    {
+        $find = User::find(Auth::user()->id);
+        $find->name = $request->name;
+        $find->update();
+        return redirect()->back()->with('pesan', 'berhasil ');
+    }
+    // end profile
 }

@@ -1,0 +1,64 @@
+.box-large {
+    width:100%;
+    height:450px;
+    display:flex;
+    justify-content: center;
+    align-items:center;
+}
+.wp-images {
+    width:200px;
+    background-color: white;
+    height:200px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    border-radius:50%;
+}
+.foo {
+    width:200px;
+    max-height: 300px;
+    background: rgb(146, 146, 146);
+}
+.text-100 {
+    display: block;
+    width: 100%;
+    height: auto;
+    text-align: center;
+}
+.button {
+    width:auto;
+    padding-left:15px;
+    padding-right:15px;
+    padding-top:10px;
+    padding-bottom:10px;
+    box-sizing: border-box;
+    text-align: center;
+    background: #333;
+    color: white;
+    outline: none;
+    border: none;
+    border-radius:8px;
+}
+.button:hover {
+    background-color: rgb(83, 83, 83);
+}
+.margin-top-5 {
+    margin-top: 20px;
+}
+.text-between {
+    display: flex;
+    height: 50px;
+    width:100%;
+    color: black;
+    justify-content: space-between;
+    align-items: center;
+}
+.input {
+    width:200px;
+    text-align:right;
+    margin-right:10px;
+    border:none;
+    background: transparent;
+    outline: none;
+}
