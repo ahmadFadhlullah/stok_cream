@@ -35,7 +35,7 @@
                 <span>ID User</span>
                 <span>{{ Auth::user()->id }}</span>
             </div>
-            <button class="button">Simpan Perubahan</button>
+            <button type="submit" class="button">Simpan Perubahan</button>
         </form>
         
     </div>
