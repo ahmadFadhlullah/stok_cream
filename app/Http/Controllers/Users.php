@@ -26,6 +26,20 @@ class Users extends Controller
         return view('user.tabel_cream', compact('fetch_cream_all'));
     }
 
+    public function tambah_cream(Request $request)
+    {
+        $stokcream = new StokCream;
+        $stokcream->nama_cream = $request->nama_cream;
+        $stokcream->kode_cream = $request->kode_cream;
+        $stokcream->jumlah = $request->jumlah;
+        $stokcream->harga = $request->harga;
+        $stokcream->tanggal_kadaluwarsa = $request->tanggal_kadaluwarsa;
+        $stokcream->keterangan = $request->keterangan;
+        $stokcream->save();
+        
+        return redirect()->back()->with('pesan','berhasil menambahkan krim baru');
+    }
+
     public function hapus_cream(Request $request)
     {
         $id = $request->id;

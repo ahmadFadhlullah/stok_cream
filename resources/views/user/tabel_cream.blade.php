@@ -13,8 +13,13 @@
         Stok Krim
     </h3><!-- Button trigger modal -->
 <button type="button" class="button-dark margin-3" data-toggle="modal" data-target="#exampleModal">
-  Launch demo modal
+  Tambah Krim
 </button>
+@if(Session::has('pesan'))
+    <div class="container">
+        <div class="alert alert-info">{{ Session::get('pesan') }}</div>
+    </div>
+@endif
 
 <!-- Modal -->
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -27,17 +32,38 @@
         </button>
       </div>
       <div class="modal-body">
-        <form action="" method="post">
+        <form action="{{ route('tambah_cream') }}" method="post">
             @csrf 
             <div class="form-group">
-                <label for=""></label>
+                <label for="nama_cream">Nama Krim</label>
+                <input type="text" name="nama_cream" id="nama_cream" class="form-control">
             </div>
-        </form>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
-      </div>
+            <div class="form-group">
+                <label for="kode_cream">Kode Krim</label>
+                <input type="text" name="kode_cream" id="kode_cream" class="form-control">
+            </div>
+            <div class="form-group">
+                <label for="jumlah">Jumlah</label>
+                <input type="number" name="jumlah" id="jumlah" class="form-control">
+            </div>
+            <div class="form-group">
+                <label for="harga">Harga Krim</label>
+                <input type="number" name="harga" id="harga" class="form-control">
+            </div>
+            <div class="form-group">
+                <label for="tanggal_kadaluwarsa">Tanggal Kadaluwarsa</label>
+                <input type="date" name="tanggal_kadaluwarsa" id="tanggal_kadaluwarsa" class="form-control">
+            </div>
+            <div class="form-group">
+                <label for="keterangan">Catatan</label>
+                <textarea name="keterangan" id="keterangan" cols="30" rows="10" class="form-control"></textarea>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-primary">Simpan</button>
+        </div>
+    </form>
     </div>
   </div>
 </div>

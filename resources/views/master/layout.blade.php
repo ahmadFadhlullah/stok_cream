@@ -11,6 +11,7 @@
   <link rel="stylesheet" href="{{ asset('lib/bootstrap/css/bootstrap.min.css') }}">
   <link rel="stylesheet" href="{{ asset('lib/font-awesome/css/font-awesome.css') }}">
   <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+  <link rel="stylesheet" href="{{ asset('custom/css/lib.css') }}">
     @yield('css')
 </head>
 
@@ -224,7 +225,7 @@
       <div id="sidebar" class="nav-collapse ">
         <!-- sidebar menu start-->
         <ul class="sidebar-menu" id="nav-accordion">
-          <p class="centered"><a href="profile.html"><img src="img/ui-sam.jpg" class="img-circle" width="80"></a></p>
+          <p class="centered"><a href="{{ route('user.profile') }}"><img src="{{ asset('profil/'. Auth::user()->url_image) }}" class="image-circle" width="80"></a></p>
           <h5 class="centered">{{ Auth::user()->name }}</h5>
           <li class="mt">
             <a class="active" href="{{ route('home') }}">

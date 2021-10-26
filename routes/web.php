@@ -7,6 +7,7 @@ Auth::routes();
 Route::get('/home', 'Users@index')->name('home');
 Route::get('/', 'Users@index')->name('index');
 Route::get('/home/tabelcream','Users@tabel_cream')->name('tabel_cream');
+Route::post('/home/tabelcream','Users@tambah_cream')->name('tambah_cream');
 // aksi cream
 Route::post('/home/tablecream','Users@hapus_cream')->name('hapus_cream');
 
