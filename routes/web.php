@@ -9,6 +9,8 @@ Route::get('/', 'Users@index')->name('index');
 Route::get('/home/tabelcream','Users@tabel_cream')->name('tabel_cream');
 Route::post('/home/tabelcream','Users@tambah_cream')->name('tambah_cream');
 Route::get('/home/editcream/{id}', 'Users@edit_cream')->name('edit_cream');
+Route::post('/home/updatecream', 'Users@update_cream')->name('update_cream');
+Route::post('/home/editcream/{id}', 'Users@update_stok_cream')->name('update_stok_cream');
 // aksi cream
 Route::post('/home/tablecream','Users@hapus_cream')->name('hapus_cream');
 

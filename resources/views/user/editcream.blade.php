@@ -9,6 +9,9 @@
         <h3>
             Edit Krim
         </h3>
+        @if(Session::has('success'))
+            <div class="alert alert-info">{{ Session::get('success') }}</div>
+        @endif
         <div class="card shadow mb-4 p-2">
             <div class="card-header py-3">
                 <h6 class="m-0 font-weight-bold text-primary">List Product</h6>
@@ -16,7 +19,7 @@
             <div class="card-body">
                 <div class="row">
                     <div class="col-6">
-                        <form action="" method="post">
+                        <form action="{{ route('update_stok_cream', $find_cream->id) }}" method="post">
                             @csrf 
                             <div class="form-group">
                                 <label for="nama_cream">Nama Krim</label>
@@ -50,8 +53,9 @@
                             form dibawah ini untuk update stok krim (masuk krim baru).
                             selain menggunakan penanggalan manual, form menggunakan sistem otomatis yang menyimpan data update krim dalam history admin
                         </div>
-                        <form action="" method="post">
+                        <form action="{{ route('update_cream') }}" method="post">
                             @csrf 
+                            <input type="hidden" name="id" value="{{ $find_cream->id }}">
                             <div class="form-group">
                                 <label for="nama_cream">Nama Krim</label>
                                 <input type="text" name="nama_cream" id="nama_cream" class="form-control" value="{{ $find_cream->nama_cream }}">

@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use App\User;
 use App\StokCream;
+use App\HistoryUpdateCream;
 
 class Users extends Controller
 {
@@ -44,6 +45,49 @@ class Users extends Controller
     {
         $find_cream = StokCream::find($id);
         return view('user.editcream', compact('find_cream'));
+    }
+
+    public function update_stok_cream(Request $request, $id)
+    {
+        $find_cream = StokCream::find($id);
+
+        $historyupdatecream = new HistoryUpdateCream;
+        $historyupdatecream->nama_cream = $request->nama_cream;
+        $historyupdatecream->jumlah = $request->jumlah;
+        $historyupdatecream->harga = $request->harga;
+        $historyupdatecream->kode_cream = $request->kode_cream;
+        $historyupdatecream->tanggal_kadaluwarsa = $request->tanggal_kadaluwarsa;
+        $historyupdatecream->keterangan = $request->keterangan;
+        $historyupdatecream->bagian = 'edit_stok_cream';
+        $historyupdatecream->save();
+
+        $find_cream->nama_cream = $request->nama_cream;
+        $find_cream->jumlah = $request->jumlah;
+        $find_cream->harga = $request->harga;
+        $find_cream->kode_cream = $request->kode_cream;
+        $find_cream->tanggal_kadaluwarsa = $request->tanggal_kadaluwarsa;
+        $find_cream->keterangan = $request->keterangan;
+        $find_cream->update();
+
+        return redirect()->back()->with('success', 'berhasil mengedit produk');
+    }
+    public function update_cream(Request $request)
+    {
+        $find_cream = StokCream::find($request->id);
+        $stok_terkini = $find_cream->jumlah;
+
+        $historyupdatecream = new HistoryUpdateCream;
+        $historyupdatecream->kode_cream = $find_cream->kode_cream;
+        $historyupdatecream->jumlah_update = $request->jumlah_update;
+        $historyupdatecream->jumlah_sebelum = $stok_terkini;
+        $historyupdatecream->jumlah_setelah = $stok_terkini + $request->jumlah_update;
+        $historyupdatecream->keterangan = $request->catatan;
+        $historyupdatecream->bagian = 'update_cream';
+        $historyupdatecream->save();
+
+        $find_cream->jumlah = $request->jumlah_update + $stok_terkini;
+        $find_cream->update();
+        return redirect()->back()->with('success', 'berhasil update stok cream');
     }
 
     public function hapus_cream(Request $request)
