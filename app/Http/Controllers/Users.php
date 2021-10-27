@@ -40,6 +40,12 @@ class Users extends Controller
         return redirect()->back()->with('pesan','berhasil menambahkan krim baru');
     }
 
+    public function edit_cream($id)
+    {
+        $find_cream = StokCream::find($id);
+        return view('user.editcream', compact('find_cream'));
+    }
+
     public function hapus_cream(Request $request)
     {
         $id = $request->id;

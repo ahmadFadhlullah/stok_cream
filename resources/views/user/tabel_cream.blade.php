@@ -80,8 +80,8 @@
                                         <tr>
                                             <th>Nama Cream</th>
                                             <th>Stok Cream</th>
-                                            <th>Keterangan</th>
                                             <th>Kode Cream</th>
+                                            <th>Keterangan</th>
                                             <th>Harga</th>
                                             <th>Aksi</th>
                                         </tr>
@@ -100,14 +100,14 @@
                                         @foreach($fetch_cream_all as $cream)
                                             <tr>
                                                 <td>{{ $cream->nama_cream }}</td>
-                                                <td>{{ $cream->stok_cream }}</td>
+                                                <td>{{ $cream->jumlah }}</td>
                                                 <td>{{ $cream->kode_cream }}</td>
                                                 <td>{{ $cream->keterangan }}</td>
                                                 <td>{{ $cream->harga }}</td>
                                                 <td>
                                                     <div class="btn-group">
-                                                        <button class="btn btn-sm">Edit</button>
-                                                        <button class="btn btn-sm">detail</button>
+                                                        <a href="{{ route('edit_cream', $cream->id) }}" class="btn btn-sm">Edit</a>
+                                                        <a href="{{ route('edit_cream', $cream->id) }}" class="btn btn-sm">detail</a>
                                                         <button class="btn btn-sm" onclick='alertSwal("{{ $cream->id }}")' >Delete</button>
                                                     </div>
                                                 </td>
