@@ -13,6 +13,7 @@ Route::post('/home/updatecream', 'Users@update_cream')->name('update_cream');
 Route::post('/home/editcream/{id}', 'Users@update_stok_cream')->name('update_stok_cream');
 
 Route::get('/home/pembelian', 'Users@pembelian')->name('pembelian');
+Route::post('/home/pembelian', 'Users@pembelianForm')->name('pembelian.proses');
 // aksi cream
 Route::post('/home/tablecream','Users@hapus_cream')->name('hapus_cream');
 

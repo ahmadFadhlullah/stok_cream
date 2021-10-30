@@ -89,7 +89,7 @@
         </button>
       </div>
       <div class="modal-body">
-            <form action="" method="post">
+            <form action="{{ route('pembelian.proses') }}" method="post">
                 @csrf 
                 <div class="first-wrap">
                     <div class="row">
@@ -105,7 +105,7 @@
                             <label for="kode_cream"><b>Krim</b></label>
                         </div>
                         <div class="col-9">
-                            <select name="kode_cream" id="kode_cream[]" class="form-control">
+                            <select name="kode_cream[]" id="kode_cream[]" class="form-control">
                                 @foreach($stok_cream as $cream)
                                     <option value="{{ $cream->kode_cream }}">{{ $cream->nama_cream }}</option>
                                 @endforeach
@@ -124,11 +124,19 @@
                         </div>
                     </div>
                 </div>
-            </form>
+            
 
 
-            <!-- hide section -->
-                <div class="hidden">
+            
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-primary">Simpan</button>
+        </div>
+    </form>
+
+    <!-- hide section -->
+    <div class="hidden">
                     <div class="new-section">
                         <hr>
                         <div class="row mt-3">
@@ -165,12 +173,6 @@
                     </div>
                 </div>
             <!-- hidden section -->
-        </div>
-        <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            <button type="submit" class="btn btn-primary">Simpan</button>
-        </div>
-    </form>
     </div>
   </div>
 </div>

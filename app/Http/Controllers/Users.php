@@ -29,6 +29,25 @@ class Users extends Controller
         return view('user.tabel_cream', compact('fetch_cream_all','stok_cream'));
     }
 
+    public function pembelianForm(Request $request)
+    {
+        $nama_pembeli = [];
+        $kode_cream = [];
+        $jumlah = [];
+        
+        for($x = 0; $x < count($request->nama_pembeli); $x++)
+        {
+            // array_push($nama_pembeli, $request->nama_pembeli[$x]);
+            $historyPembeli = new HistoryPembeli;
+            $historyPembeli->nama_pembeli = $request->nama_pembeli[$x];
+            $historyPembeli->kode_cream = $request->kode_cream[$x];
+            $historyPembeli->jumlah = $request->jumlah[$x];
+            $historyPembeli->save();
+        }
+
+        return redirect()->back()->with('pesan','berhasil menambahkan data pembeli baru');
+        // dd($nama_pembeli);
+    }
     public function tambah_cream(Request $request)
     {
         $stokcream = new StokCream;
