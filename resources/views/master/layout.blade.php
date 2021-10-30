@@ -243,7 +243,7 @@
           </li>
          
           <li class="sub-menu">
-            <a href="javascript:;">
+            <a href="{{ route('pembelian') }}">
               <i class="fa fa-tasks"></i>
               <span>Riwayat Pembelian</span>
               </a>

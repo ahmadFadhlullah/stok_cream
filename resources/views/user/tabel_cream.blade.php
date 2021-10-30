@@ -12,9 +12,16 @@
     <h3>
         Stok Krim
     </h3><!-- Button trigger modal -->
-<button type="button" class="button-dark margin-3" data-toggle="modal" data-target="#exampleModal">
+<div class="wp-button m-3">
+<button type="button" class="btn btn-dark" data-toggle="modal" data-target="#exampleModal">
   Tambah Krim
 </button>
+
+<button class="btn btn-success" type="button" data-toggle="modal" data-target="#Customer">
+    Tambah Data Pembelian
+</button>
+
+</div>
 @if(Session::has('pesan'))
     <div class="container">
         <div class="alert alert-info">{{ Session::get('pesan') }}</div>
@@ -69,6 +76,106 @@
 </div>
 
 <!-- end modal -->
+
+<!-- modal pembeli -->
+
+<div class="modal fade" id="Customer" tabindex="-1" aria-labelledby="CustomerBuy" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="CustomerBuy">Data Pembelian</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+            <form action="" method="post">
+                @csrf 
+                <div class="first-wrap">
+                    <div class="row">
+                        <div class="col-3">
+                            <label for="nama_pembeli"><b>Nama Pembeli</b></label>
+                        </div>
+                        <div class="col-9">
+                            <input type="text" name="nama_pembeli[]" id="nama_pembeli" class="form-control">
+                        </div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col-3">
+                            <label for="kode_cream"><b>Krim</b></label>
+                        </div>
+                        <div class="col-9">
+                            <select name="kode_cream" id="kode_cream[]" class="form-control">
+                                @foreach($stok_cream as $cream)
+                                    <option value="{{ $cream->kode_cream }}">{{ $cream->nama_cream }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col-3">
+                            <label for="jumlah"><b>Jumlah</b></label>
+                        </div>
+                        <div class="col-7">
+                            <input type="number" name="jumlah[]" id="jumlah" class="form-control">
+                        </div>
+                        <div class="col-2">
+                            <span class="btn btn-success add-more"> <b>+</b> </span>
+                        </div>
+                    </div>
+                </div>
+            </form>
+
+
+            <!-- hide section -->
+                <div class="hidden">
+                    <div class="new-section">
+                        <hr>
+                        <div class="row mt-3">
+                            <div class="col-3">
+                                <label for="">Nama Pembeli</label>
+                            </div>
+                            <div class="col-9">
+                                <input type="text" name="nama_pembeli[]" class="form-control">
+                            </div>
+                        </div>
+                        <div class="row mt-3">
+                            <div class="col-3">
+                                <label for="">Krim</label>
+                            </div>
+                            <div class="col-9">
+                                <select name="kode_cream[]" id="" class="form-control">
+                                    @foreach($stok_cream as $cream)
+                                        <option value="{{ $cream->kode_cream }}">{{ $cream->nama_cream }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row mt-3">
+                            <div class="col-3">
+                                <label for="">Jumlah</label>
+                            </div>
+                            <div class="col-7">
+                                <input type="number" name="jumlah[]" class="form-control">
+                            </div>
+                            <div class="col-2">
+                                <span class="btn btn-warning" onclick="deleteElement(this)"> <b>-</b> </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            <!-- hidden section -->
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-primary">Simpan</button>
+        </div>
+    </form>
+    </div>
+  </div>
+</div>
+<!-- end modal pembeli -->
+
 <div class="card shadow mb-4 mt-2">
                         <div class="card-header py-3">
                             <h6 class="m-0 font-weight-bold text-primary">List Product</h6>
@@ -122,10 +229,31 @@
 @endsection
 
 @section('javascript')
+    <script src="{{ asset('jquery.js') }}"></script>
     <script src="{{ asset('lib/datatables/jquery.dataTables.js') }}"></script>
     <script src="{{ asset('lib/datatables/dataTables.bootstrap4.min.js') }}"></script>
     <script src="{{ asset('sweetalert.js') }}"></script>
     <script>
+
+        // function for add more
+
+        $(document).ready(function(){
+            $('.add-more').click(function(){
+                let html = $('.hidden').html();
+                $('.first-wrap').after(html);
+            });
+        });
+
+        // $('.trash').click(function(){
+        //     console.log($(this).parent('.new-section'));
+        // })
+        function deleteElement(el){
+            el.parentElement.parentElement.parentElement.remove();
+        }
+
+
+        // end function for add more
+
         $(document).ready(function(){
             $('#dataTable').DataTable();
         });
