@@ -18,6 +18,7 @@
                                 <th>Krim</th>
                                 <th>Jumlah Pembelian</th>
                                 <th>Tanggal Pembelian</th>
+                                <th>Aksi</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -27,6 +28,13 @@
                                     <td>{{ $history_pembeli->nama_cream }}</td>
                                     <td>{{ $history_pembeli->jumlah }}</td>
                                     <td>{{ $history_pembeli->created_at }}</td>
+                                    <td>
+                                        <div class="btn-group">
+                                            <button class="btn btn-warning"> <i class="fa fa-trash"></i> </button>
+                                            <button class="btn btn-success"> <i class="fa fa-edit"></i> </button>
+                                            <button class="btn btn-warning"> <i class="fa fa-eye"></i> </button>
+                                        </div>
+                                    </td>
                                 </tr>
                             @endforeach
                         </tbody>
@@ -36,6 +44,7 @@
                                 <th>Krim</th>
                                 <th>Jumlah Pembelian</th>
                                 <th>Tanggal Pembelian</th>
+                                <th>Aksi</th>
                             </tr>
                         </tfoot>
                     </table>
