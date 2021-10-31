@@ -48,6 +48,33 @@ class Users extends Controller
         return redirect()->back()->with('pesan','berhasil menambahkan data pembeli baru');
         // dd($nama_pembeli);
     }
+
+    public function hapusPembeli(Request $request)
+    {
+        $id = $request->id;
+        $findFromHistoryPembeli = HistoryPembeli::find($id);
+        $findFromHistoryPembeli->delete();
+        return "berhasil menghapus";
+    }
+
+    public function editPembeli($id)
+    {
+        $find = HistoryPembeli::find($id);
+        $produk = DB :: table('stok_cream')->select('nama_cream','kode_cream')->get();
+        return view('user.editpembeli', compact('find','produk'));
+    }
+
+    public function editPembeliForm(Request $request, $id)
+    {
+        $pembeli = HistoryPembeli::find($id);
+        $pembeli->nama_pembeli = $request->nama_pembeli;
+        $pembeli->kode_cream = $request->kode_cream;
+        $pembeli->jumlah = $request->jumlah;
+        $pembeli->created_at = $request->created_at;
+        $pembeli->update();
+        return redirect()->back()->with('pesan', 'berhasil mengupdate data pembeli');
+    }
+
     public function tambah_cream(Request $request)
     {
         $stokcream = new StokCream;

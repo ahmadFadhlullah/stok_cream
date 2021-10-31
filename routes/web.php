@@ -14,6 +14,9 @@ Route::post('/home/editcream/{id}', 'Users@update_stok_cream')->name('update_sto
 
 Route::get('/home/pembelian', 'Users@pembelian')->name('pembelian');
 Route::post('/home/pembelian', 'Users@pembelianForm')->name('pembelian.proses');
+Route::post('/home/pembelian/hapus', 'Users@hapusPembeli')->name('hapus_pembeli');
+Route::get('/home/pembeli/{id}', 'Users@editPembeli')->name('edit_pembeli');
+Route::post('/home/pembeli/edit/{id}','Users@editPembeliForm')->name('edit_pembeli_form');
 // aksi cream
 Route::post('/home/tablecream','Users@hapus_cream')->name('hapus_cream');
 

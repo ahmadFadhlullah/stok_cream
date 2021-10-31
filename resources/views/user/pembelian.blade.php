@@ -1,5 +1,6 @@
 @extends('master.layout')
 @section('css')
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="stylesheet" href="{{ asset('lib/datatables/dataTables.bootstrap4.min.css') }}">
     <link rel="stylesheet" href="{{ asset('custom/css/index.css') }}">
 @endsection
@@ -30,8 +31,8 @@
                                     <td>{{ $history_pembeli->created_at }}</td>
                                     <td>
                                         <div class="btn-group">
-                                            <button class="btn btn-warning"> <i class="fa fa-trash"></i> </button>
-                                            <button class="btn btn-success"> <i class="fa fa-edit"></i> </button>
+                                            <button onclick="deleteUser(this)" id="{{ $history_pembeli->id }}" class="btn btn-warning"> <i class="fa fa-trash"></i> </button>
+                                            <a href="{{ route('edit_pembeli', $history_pembeli->id) }}" class="btn btn-success"> <i class="fa fa-edit"></i> </a>
                                             <button class="btn btn-warning"> <i class="fa fa-eye"></i> </button>
                                         </div>
                                     </td>
@@ -58,8 +59,42 @@
     <script src="{{ asset('lib/datatables/dataTables.bootstrap4.min.js') }}"></script>
     <script src="{{ asset('sweetalert.js') }}"></script>
     <script>
+        function deleteUser(el)
+        {
+            let id = el.id;
+            let res = confirm(`ingin menghapus ${id} ?`);
+            if(res)
+            {
+                $.ajaxSetup({
+                            headers: {
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                            }
+                        });
+                $.ajax({
+                    url : "{{ route('hapus_pembeli') }}",
+                    type : "POST",
+                    data : {
+                        id : `${id}`
+                    },
+                    success : function(data)
+                    {
+                        alert('berhasil menghapus data pembeli');
+                        location.reload();
+
+                    },
+                    error : function(error)
+                    {
+                        alert('terjadi error pada '+error);
+                    }
+                });
+            }
+        }
+    </script>
+    <script>
         $(document).ready(function(){
             $('#dataTable').DataTable();
         });
+
+        
     </script>
 @endsection
