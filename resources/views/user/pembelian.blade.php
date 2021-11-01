@@ -9,6 +9,30 @@
         <div class="card shadow mb-4 mt-2">
             <div class="card-header py-3">
                 <h6 class="m-0 font-weight-bold text-primary">History Pembelian Krim</h6>
+                <form action="{{ route('cetak_laporan') }}" method="post">
+                    @csrf 
+                    <div class="row mt-3">
+                    <div class="col-3">
+                        <select name="bulan" id="bulan" class="form-control">
+                            <option value="01">Januari</option>
+                            <option value="02">Februari</option>
+                            <option value="03">Maret</option>
+                            <option value="04">April</option>
+                            <option value="05">Mei</option>
+                            <option value="06">Juni</option>
+                            <option value="07">Juli</option>
+                            <option value="08">Agustus</option>
+                            <option value="09">September</option>
+                            <option value="10">Oktober</option>
+                            <option value="11">November</option>
+                            <option value="12">Desember</option>
+                        </select>
+                    </div>
+                    <div class="col-1">
+                        <button type="submit" class="btn btn-success">Cetak Laporan</button>
+                    </div>
+                </div>
+                </form>
             </div>
             <div class="card-body">
                 <div class="table-responsive">

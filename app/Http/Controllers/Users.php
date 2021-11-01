@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use App\User;
+use Carbon\Carbon;
 use App\StokCream;
 use App\HistoryPembeli;
 use App\HistoryUpdateCream;
@@ -31,12 +32,20 @@ class Users extends Controller
 
     public function pembelianForm(Request $request)
     {
-        $nama_pembeli = [];
-        $kode_cream = [];
-        $jumlah = [];
+        
         
         for($x = 0; $x < count($request->nama_pembeli); $x++)
         {
+
+            $kode_cream = $request->kode_cream[$x];
+            $find_cream = DB :: table('stok_cream')->select('id','kode_cream','nama_cream','jumlah')->where([
+                ['kode_cream','=',"$kode_cream"]
+            ])->get();
+            
+            $id_cream = $find_cream[0]->id;
+            $find_cream_model = StokCream::find($id_cream);
+            $find_cream_model->jumlah = $find_cream[0]->jumlah - $request->jumlah[$x];
+            $find_cream_model->update();
             // array_push($nama_pembeli, $request->nama_pembeli[$x]);
             $historyPembeli = new HistoryPembeli;
             $historyPembeli->nama_pembeli = $request->nama_pembeli[$x];
@@ -77,16 +86,19 @@ class Users extends Controller
 
     public function tambah_cream(Request $request)
     {
+
+        $keterangan = $request->keterangan;
+        
         $stokcream = new StokCream;
         $stokcream->nama_cream = $request->nama_cream;
         $stokcream->kode_cream = $request->kode_cream;
         $stokcream->jumlah = $request->jumlah;
         $stokcream->harga = $request->harga;
         $stokcream->tanggal_kadaluwarsa = $request->tanggal_kadaluwarsa;
-        $stokcream->keterangan = $request->keterangan;
+        $stokcream->keterangan = $keterangan;
         $stokcream->save();
-        
         return redirect()->back()->with('pesan','berhasil menambahkan krim baru');
+
     }
 
     public function edit_cream($id)
@@ -180,4 +192,29 @@ class Users extends Controller
         return redirect()->back()->with('pesan', 'berhasil ');
     }
     // end profile
+
+    public function buatLaporan()
+    {
+        return view('user.laporan');
+    }
+    public function cetakLaporan(Request $request)
+    {
+        $bulan = $request->bulan;
+        $timeNow = Carbon::now();
+        $bulanNow;
+        // array time
+        $timeArr = ['01'=>'Januari','02'=>'Februari','03'=>'Maret','04'=>'April','05'=>'Mei','06'=>'Juni','07'=>'Juli','08'=>'Agustus','09'=>'September','10'=>'Oktober','11'=>'November','12'=>'Desember'];
+
+        foreach($timeArr as  $key => $value)
+        {
+            if($bulan == $key)
+            {
+                $bulanNow = $value;
+            }
+        }
+
+        $search = DB :: table("history_pembelis")->join('stok_cream','history_pembelis.kode_cream','=','stok_cream.kode_cream')->select('history_pembelis.*','stok_cream.nama_cream')->whereMonth('history_pembelis.created_at','=',"$bulan")->get();
+        return view('user.cetak', compact('search','timeNow','bulanNow'));
+
+    }
 }
