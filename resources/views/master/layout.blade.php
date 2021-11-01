@@ -213,7 +213,12 @@
       </div>
       <div class="top-menu">
         <ul class="nav pull-right top-menu">
-          <li><a class="logout" href="login.html">Logout</a></li>
+          <li>
+            <form action="{{ route('logout') }}" class="mt-4" method="post">
+              @csrf 
+              <button class="btn btn-success">Keluar</button>
+            </form>
+          </li>
         </ul>
       </div>
     </header>
