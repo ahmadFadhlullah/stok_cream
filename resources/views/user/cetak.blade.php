@@ -38,18 +38,18 @@
     <table class="table table-bordered">
         <thead>
             <tr>
-                <th>Nama Pembeli</th>
-                <th>Nama Cream</th>
-                <th>Jumlah</th>
+                <th>Nama Krim</th>
+                <th>Jumlah Terjual</th>
+                <th>Kode Krim</th>
                 <th>Tanggal Pembelian</th>
             </tr>
         </thead>
         <tbody>
             @foreach($search as $pembeli)
                 <tr>
-                    <td>{{ $pembeli->nama_pembeli }}</td>
                     <td>{{ $pembeli->nama_cream }}</td>
-                    <td>{{ $pembeli->jumlah }}</td>
+                    <td>{{ $pembeli->banyaknya }}</td>
+                    <td>{{ $pembeli->kode_cream }}</td>
                     <td>{{ $pembeli->created_at }}</td>
                 </tr>
             @endforeach

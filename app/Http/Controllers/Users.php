@@ -213,8 +213,9 @@ class Users extends Controller
             }
         }
 
-        $search = DB :: table("history_pembelis")->join('stok_cream','history_pembelis.kode_cream','=','stok_cream.kode_cream')->select('history_pembelis.*','stok_cream.nama_cream')->whereMonth('history_pembelis.created_at','=',"$bulan")->get();
+        $search = DB :: table("history_pembelis")->join('stok_cream','history_pembelis.kode_cream','=','stok_cream.kode_cream')->select(DB::raw('SUM(history_pembelis.jumlah) AS banyaknya'),'stok_cream.kode_cream','stok_cream.created_at','stok_cream.nama_cream')->whereMonth('history_pembelis.created_at','=',"$bulan")->groupBy('stok_cream.nama_cream')->get();
         return view('user.cetak', compact('search','timeNow','bulanNow'));
+        // return $search;
 
     }
 }
