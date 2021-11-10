@@ -52,7 +52,13 @@
                                     <td>{{ $history_pembeli->nama_pembeli }}</td>
                                     <td>{{ $history_pembeli->nama_cream }}</td>
                                     <td>{{ $history_pembeli->jumlah }}</td>
-                                    <td>{{ $history_pembeli->created_at }}</td>
+                                    <td>
+                                        @if( isset($history_pembeli->tanggal_masuk) )
+                                            {{ $history_pembeli->tanggal_masuk }}
+                                        @else 
+                                            {{ $history_pembeli->created_at }}
+                                        @endif
+                                    </td>
                                     <td>
                                         <div class="btn-group">
                                             <button onclick="deleteUser(this)" id="{{ $history_pembeli->id }}" class="btn btn-warning"> <i class="fa fa-trash"></i> </button>

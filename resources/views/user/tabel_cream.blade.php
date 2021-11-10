@@ -114,6 +114,14 @@
                     </div>
                     <div class="row mt-3">
                         <div class="col-3">
+                            <label for="tanggal_masuk">Tanggal</label>
+                        </div>
+                        <div class="col-9">
+                            <input type="date" name="tanggal_masuk[]" id="tanggal_masuk" class="form-control">
+                        </div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col-3">
                             <label for="jumlah"><b>Jumlah</b></label>
                         </div>
                         <div class="col-7">
@@ -157,6 +165,14 @@
                                         <option value="{{ $cream->kode_cream }}">{{ $cream->nama_cream }}</option>
                                     @endforeach
                                 </select>
+                            </div>
+                        </div>
+                        <div class="row mt-3">
+                            <div class="col-3">
+                                <label>Tanggal</label>
+                            </div>
+                            <div class="col-9">
+                                <input type="date" name="tanggal_masuk[]" class="form-control">
                             </div>
                         </div>
                         <div class="row mt-3">

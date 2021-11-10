@@ -51,6 +51,7 @@ class Users extends Controller
             $historyPembeli->nama_pembeli = $request->nama_pembeli[$x];
             $historyPembeli->kode_cream = $request->kode_cream[$x];
             $historyPembeli->jumlah = $request->jumlah[$x];
+            $historyPembeli->tanggal_masuk = $request->tanggal_masuk[$x];
             $historyPembeli->save();
         }
 
