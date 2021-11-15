@@ -41,16 +41,18 @@
                 <th>Nama Krim</th>
                 <th>Jumlah Terjual</th>
                 <th>Kode Krim</th>
-                <th>Tanggal Pembelian</th>
+                <th>Nama Krim</th>
+                <th>Sisa Stok Krim</th>
             </tr>
         </thead>
         <tbody>
             @foreach($search as $pembeli)
                 <tr>
                     <td>{{ $pembeli->nama_cream }}</td>
-                    <td>{{ $pembeli->banyaknya }}</td>
+                    <td>{{ $pembeli->total }}</td>
                     <td>{{ $pembeli->kode_cream }}</td>
-                    <td>{{ $pembeli->created_at }}</td>
+                    <td>{{ $pembeli->nama_cream }}</td>
+                    <td>{{ $pembeli->jumlah }}</td>
                 </tr>
             @endforeach
         </tbody>
