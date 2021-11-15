@@ -97,6 +97,7 @@ class Users extends Controller
         $stokcream->harga = $request->harga;
         $stokcream->tanggal_kadaluwarsa = $request->tanggal_kadaluwarsa;
         $stokcream->keterangan = $keterangan;
+        $stokcream->status = 'long';
         $stokcream->save();
         return redirect()->back()->with('pesan','berhasil menambahkan krim baru');
 
@@ -219,5 +220,48 @@ class Users extends Controller
         return view('user.cetak', compact('search','timeNow','bulanNow'));
         // return $search;
 
+    }
+
+    public function stokMenipis()
+    {
+        $carbonNow = Carbon::now();
+
+        $arr_diff = [];
+        $selectTanggal = DB :: table('stok_cream')->select('stok_cream.*')->get();
+        foreach($selectTanggal as $selecttanggal)
+        {
+            // $diffcarbon = new Carbon($selecttanggal->tanggal_kadaluwarsa);
+            // array_push($arr_diff,$diffcarbon);
+            $diffcarbon = new Carbon($selecttanggal->tanggal_kadaluwarsa);
+            $arr = [
+                "id" => $selecttanggal->id,
+                "nama_cream" => $selecttanggal->nama_cream,
+                "kode_cream" => $selecttanggal->kode_cream,
+                "tanggal_kadaluwarsa" => $diffcarbon,
+                "sisa hari" => $diffcarbon->diff($carbonNow)->days,
+            ];
+            array_push($arr_diff,$arr);
+        }
+        return $this->changeStatus($arr_diff);
+    }
+
+    protected function changeStatus($arr)
+    {
+        foreach($arr as $item)
+        {
+            if($item['sisa hari'] < 30)
+            {
+                $status = StokCream::find($item['id']);
+                $status->status = 'warning';
+                $status->update();
+                return redirect()->back();
+            } else if($item['sisa hari'] < 1)
+            {
+                $status = StokCream::find($item['id']);
+                $status->status = 'expired';
+                $status->update();
+                return redirect()->back();
+            }
+        }
     }
 }

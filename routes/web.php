@@ -19,6 +19,7 @@ Route::get('/home/pembeli/{id}', 'Users@editPembeli')->name('edit_pembeli');
 Route::post('/home/pembeli/edit/{id}','Users@editPembeliForm')->name('edit_pembeli_form');
 Route::get('/home/laporan', 'Users@buatLaporan')->name('halaman_laporan');
 Route::post('/home/laporan','Users@cetakLaporan')->name('cetak_laporan');
+Route::get('/home/stokmenipis', 'Users@stokMenipis')->name('stok_menipis');
 // aksi cream
 Route::post('/home/tablecream','Users@hapus_cream')->name('hapus_cream');
 

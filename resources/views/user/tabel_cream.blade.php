@@ -208,6 +208,7 @@
                                             <th>Kode Cream</th>
                                             <th>Keterangan</th>
                                             <th>Harga</th>
+                                            <th>Status</th>
                                             <th>Aksi</th>
                                         </tr>
                                     </thead>
@@ -218,6 +219,7 @@
                                             <th>Kode Cream</th>
                                             <th>Keterangan</th>
                                             <th>Harga</th>
+                                            <th>Status</th>
                                             <th>Aksi</th>
                                         </tr>
                                     </tfoot>
@@ -229,6 +231,15 @@
                                                 <td>{{ $cream->kode_cream }}</td>
                                                 <td>{{ $cream->keterangan }}</td>
                                                 <td>{{ $cream->harga }}</td>
+                                                <td>
+                                                    @if($cream->status == 'warning')
+                                                        <span class="badge badge-pill bg-warning text-dark">{{ $cream->status }}</span>
+                                                    @elseif($cream->status == 'long')
+                                                        <span class="badge badge-pill bg-success">{{ $cream->status }}</span>
+                                                    @else
+                                                        <span class="badge badge-pill bg-danger text-light">{{ $cream->status }}</span>
+                                                    @endif
+                                                </td>
                                                 <td>
                                                     <div class="btn-group">
                                                         <a href="{{ route('edit_cream', $cream->id) }}" class="btn btn-sm">Edit</a>
