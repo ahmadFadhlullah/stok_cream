@@ -51,7 +51,14 @@ class Users extends Controller
             $historyPembeli->nama_pembeli = $request->nama_pembeli[$x];
             $historyPembeli->kode_cream = $request->kode_cream[$x];
             $historyPembeli->jumlah = $request->jumlah[$x];
-            $historyPembeli->tanggal_masuk = $request->tanggal_masuk[$x];
+            // $historyPembeli->tanggal_masuk = $request->tanggal_masuk[$x];
+            if($request->tanggal_masuk[$x] == null)
+            {
+                $historyPembeli->tanggal_masuk = Carbon::now();
+            } else 
+            {
+                $historyPembeli->tanggal_masuk = $request->tanggal_masuk[$x];
+            }
             $historyPembeli->save();
         }
 
@@ -216,7 +223,7 @@ class Users extends Controller
         }
 
         // $search = DB :: table("history_pembelis")->join('stok_cream','history_pembelis.kode_cream','=','stok_cream.kode_cream')->select(DB::raw('SUM(history_pembelis.jumlah) AS banyaknya'),'stok_cream.kode_cream','stok_cream.created_at','stok_cream.nama_cream')->whereMonth('history_pembelis.created_at','=',"$bulan")->groupBy('stok_cream.nama_cream')->get();
-        $search = DB :: table('history_pembelis')->join('stok_cream','history_pembelis.kode_cream','=','stok_cream.kode_cream')->select('stok_cream.jumlah','history_pembelis.kode_cream','stok_cream.nama_cream','stok_cream.nama_cream',DB::raw('SUM(history_pembelis.jumlah) AS total'))->whereMonth('history_pembelis.created_at','=',$bulan)->orWhereMonth('history_pembelis.tanggal_masuk','=',$bulan)->groupBy('history_pembelis.kode_cream')->get();
+        $search = DB :: table('history_pembelis')->join('stok_cream','history_pembelis.kode_cream','=','stok_cream.kode_cream')->select('stok_cream.jumlah','history_pembelis.kode_cream','stok_cream.nama_cream','stok_cream.nama_cream',DB::raw('SUM(history_pembelis.jumlah) AS total'))->whereMonth('history_pembelis.tanggal_masuk','=',$bulan)->groupBy('history_pembelis.kode_cream')->get();
         return view('user.cetak', compact('search','timeNow','bulanNow'));
         // return $search;
 
