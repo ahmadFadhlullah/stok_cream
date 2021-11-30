@@ -20,14 +20,16 @@ class Users extends Controller
 
     public function index()
     {
-        return view('user.index');
+        $jumlah = $this->jumlah_stok_icon();
+        return view('user.index', compact('jumlah'));
     }
 
     public function tabel_cream()
     {
+        $jumlah = $this->jumlah_stok_icon();
         $fetch_cream_all = StokCream::all();
         $stok_cream = DB :: table('stok_cream')->select('stok_cream.nama_cream','stok_cream.kode_cream')->get();
-        return view('user.tabel_cream', compact('fetch_cream_all','stok_cream'));
+        return view('user.tabel_cream', compact('fetch_cream_all','stok_cream','jumlah'));
     }
 
     public function pembelianForm(Request $request)
@@ -76,9 +78,10 @@ class Users extends Controller
 
     public function editPembeli($id)
     {
+        $jumlah = $this->jumlah_stok_icon();
         $find = HistoryPembeli::find($id);
         $produk = DB :: table('stok_cream')->select('nama_cream','kode_cream')->get();
-        return view('user.editpembeli', compact('find','produk'));
+        return view('user.editpembeli', compact('find','produk','jumlah'));
     }
 
     public function editPembeliForm(Request $request, $id)
@@ -112,8 +115,9 @@ class Users extends Controller
 
     public function edit_cream($id)
     {
+        $jumlah = $this->jumlah_stok_icon();
         $find_cream = StokCream::find($id);
-        return view('user.editcream', compact('find_cream'));
+        return view('user.editcream', compact('find_cream','jumlah'));
     }
 
     public function update_stok_cream(Request $request, $id)
@@ -171,16 +175,18 @@ class Users extends Controller
 
     public function pembelian()
     {
+        $jumlah = $this->jumlah_stok_icon();
         $history_pembelis = DB :: table('history_pembelis')->join('stok_cream','history_pembelis.kode_cream','=','stok_cream.kode_cream')->select('history_pembelis.*','stok_cream.nama_cream')->get();
-        return view('user.pembelian', compact('history_pembelis'));
+        return view('user.pembelian', compact('history_pembelis','jumlah'));
     }
 
     // profile
     public function profile()
     {
+        $jumlah = $this->jumlah_stok_icon();
         $profil = User::find(Auth::user()->id);
         $profilFoto = $profil->url_image;
-        return view('user.profile', compact('profilFoto'));
+        return view('user.profile', compact('jumlah','profilFoto'));
     }
     public function ubahFoto(Request $request)
     {
@@ -204,7 +210,8 @@ class Users extends Controller
 
     public function buatLaporan()
     {
-        return view('user.laporan');
+        $jumlah = $this->jumlah_stok_icon();
+        return view('user.laporan','jumlah');
     }
     public function cetakLaporan(Request $request)
     {
@@ -223,7 +230,7 @@ class Users extends Controller
         }
 
         // $search = DB :: table("history_pembelis")->join('stok_cream','history_pembelis.kode_cream','=','stok_cream.kode_cream')->select(DB::raw('SUM(history_pembelis.jumlah) AS banyaknya'),'stok_cream.kode_cream','stok_cream.created_at','stok_cream.nama_cream')->whereMonth('history_pembelis.created_at','=',"$bulan")->groupBy('stok_cream.nama_cream')->get();
-        $search = DB :: table('history_pembelis')->join('stok_cream','history_pembelis.kode_cream','=','stok_cream.kode_cream')->select('stok_cream.jumlah','history_pembelis.kode_cream','stok_cream.nama_cream','stok_cream.nama_cream',DB::raw('SUM(history_pembelis.jumlah) AS total'))->whereMonth('history_pembelis.tanggal_masuk','=',$bulan)->groupBy('history_pembelis.kode_cream')->get();
+        $search = DB :: table('history_pembelis')->join('stok_cream','history_pembelis.kode_cream','=','stok_cream.kode_cream')->select('stok_cream.jumlah','history_pembelis.kode_cream','stok_cream.nama_cream',DB::raw('SUM(history_pembelis.jumlah) AS total'))->whereMonth('history_pembelis.tanggal_masuk','=',"$bulan")->groupBy('history_pembelis.kode_cream')->get();
         return view('user.cetak', compact('search','timeNow','bulanNow'));
         // return $search;
 
@@ -251,6 +258,13 @@ class Users extends Controller
         }
         return $this->changeStatus($arr_diff);
     }
+    
+    public function jumlahStok()
+    {
+        $jumlah = $this->jumlah_stok_icon();
+        $stok_menipis = DB :: table('stok_cream')->select('stok_cream.*')->where('stok_cream.jumlah','<',5)->get();
+        return view('user.little_bit', compact('stok_menipis','jumlah'));
+    }
 
     protected function changeStatus($arr)
     {
@@ -270,5 +284,11 @@ class Users extends Controller
                 return redirect()->back();
             }
         }
+    }
+
+    protected function jumlah_stok_icon()
+    {
+        $jumlah = DB :: table('stok_cream')->select(DB::raw('COUNT(*) AS jumlah'))->where('stok_cream.jumlah','<',5)->get();
+        return $jumlah[0]->jumlah;
     }
 }

@@ -261,10 +261,10 @@
           </li>
           
           <li>
-            <a href="inbox.html">
+            <a href="{{ route('jumlah_stok') }}">
               <i class="fa fa-envelope"></i>
               <span>Stok Menipis</span>
-              <span class="label label-theme pull-right mail-info">2</span>
+              <span class="label label-theme pull-right mail-info">{{ $jumlah }}</span>
               </a>
           </li>
         </ul>

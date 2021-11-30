@@ -20,6 +20,9 @@ Route::post('/home/pembeli/edit/{id}','Users@editPembeliForm')->name('edit_pembe
 Route::get('/home/laporan', 'Users@buatLaporan')->name('halaman_laporan');
 Route::post('/home/laporan','Users@cetakLaporan')->name('cetak_laporan');
 Route::get('/home/stokmenipis', 'Users@stokMenipis')->name('stok_menipis');
+
+// percobaan Stok Menipis
+Route::get('/home/jumlahstok','Users@jumlahStok')->name('jumlah_stok');
 // aksi cream
 Route::post('/home/tablecream','Users@hapus_cream')->name('hapus_cream');
 
